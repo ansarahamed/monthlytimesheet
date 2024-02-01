@@ -188,6 +188,7 @@ function generateTimesheet() {
     inputHours.type = 'number';
     inputHours.style.width = '50px';
     inputHours.style.textAlign = 'center';
+    inputHours.readOnly = true;
     inputHours.addEventListener('input', updateTotalHours);
 
     // Check if the current day is a holiday or leave day
