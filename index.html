@@ -134,17 +134,61 @@
 </div>
 <script>
 
+function getHolidaysByMonthYear(month, year) {
+    if(month <= 9){
+        month = "0"+month;
+    }
+    const holidays = JSON.parse(localStorage.getItem("holidays")) || {};
+    console.log(holidays)
+    const searchStr = `-${month}-${year}`;
+    console.log(searchStr)
+    const results = Object.entries(holidays)
+        .filter(([date]) => date.endsWith(searchStr))
+        .map(([date, reason]) => ({
+            date: parseInt(date.split('-')[0], 10), // Extract day and convert to number
+            reason
+        }));
+        console.log(results);
+        console.log(" results only"+results)
+
+        const indexedArray = [];
+    for (const { date, reason } of results) {
+        indexedArray[date] = reason; // Assign reason at index = day number
+    }
+
+     ;
+
+
+    const daysOnly = results.map(h => h.date); // Extract only day numbers
+    console.log(" Days only"+daysOnly)
+    return [indexedArray, ...daysOnly];
+}
+
+
+// Example Usage: Get holidays in May 2025
+
+
+
+
 // Function to generate the timesheet based on user input
 function generateTimesheet() {
+
     const month = document.getElementById('month').value;
     const year = document.getElementById('year').value;
-    const holidays = document.getElementById('holidays').value;
+    //let holidays = document.getElementById('holidays').value;
     const leaves = document.getElementById('leaves').value;
     const defaultHours = parseInt(document.getElementById('defaultHours').value);
 
     const monthIndex = new Date(Date.parse(month + ' 1, ' + year)).getMonth();
     const daysInMonth = new Date(year, monthIndex + 1, 0).getDate(); // Total days in the month
     const monthName = new Date(year, monthIndex).toLocaleString('default', { month: 'long' });
+
+
+    [listed, ...returned_holidays] = getHolidaysByMonthYear(monthIndex+1, year);
+    console.log(listed);
+    document.getElementById('holidays').value = returned_holidays;
+    const holidays = document.getElementById('holidays').value; 
+
 
     document.getElementById('month').value = monthName;
 
@@ -195,6 +239,7 @@ function generateTimesheet() {
     if (holidays.split(',').map(Number).includes(day)) {
         inputHours.value = 0; // Set hours worked to zero for holidays
         row.style.backgroundColor = 'rgb(148, 184, 150)'; // Highlight holiday rows
+        cellDate.innerHTML +=  "<br>"+listed[day]; 
         holidaysCount++;
     } else if (leaves.split(',').map(Number).includes(day)) {
         inputHours.value = 0; // Set hours worked to zero for leaves
