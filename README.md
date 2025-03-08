@@ -11,6 +11,18 @@ Feel free to contribute, suggest improvements, or report any issues!
 
 **Let's make time tracking efficient and accurate!**
 
+**Declared Holidays**
+
+**In order to have declared holidays as master, and to populate automatically,  use the following script so that it could be executed in console**
+
+let holidays = {
+  "25-12-2025":  "Christmas  - Thursday"
+}
+
+localStorage.setItem("holidays", JSON.stringify(holidays));
+
+if holidays text box isEmpty, process from local Storage otherwise it would be taken from textbox.
+
 
 
 
