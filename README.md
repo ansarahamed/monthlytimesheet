@@ -21,9 +21,6 @@ let holidays = {
 
 localStorage.setItem("holidays", JSON.stringify(holidays));
 
-if holidays text box isEmpty, process from local Storage otherwise it would be taken from textbox.
-
-
 
 
 
