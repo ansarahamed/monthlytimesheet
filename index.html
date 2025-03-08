@@ -139,36 +139,21 @@ function getHolidaysByMonthYear(month, year) {
         month = "0"+month;
     }
     const holidays = JSON.parse(localStorage.getItem("holidays")) || {};
-    console.log(holidays)
     const searchStr = `-${month}-${year}`;
-    console.log(searchStr)
     const results = Object.entries(holidays)
         .filter(([date]) => date.endsWith(searchStr))
         .map(([date, reason]) => ({
             date: parseInt(date.split('-')[0], 10), // Extract day and convert to number
             reason
         }));
-        console.log(results);
-        console.log(" results only"+results)
 
-        const indexedArray = [];
+    const indexedArray = [];
     for (const { date, reason } of results) {
         indexedArray[date] = reason; // Assign reason at index = day number
     }
-
-     ;
-
-
     const daysOnly = results.map(h => h.date); // Extract only day numbers
-    console.log(" Days only"+daysOnly)
     return [indexedArray, ...daysOnly];
 }
-
-
-// Example Usage: Get holidays in May 2025
-
-
-
 
 // Function to generate the timesheet based on user input
 function generateTimesheet() {
@@ -185,7 +170,6 @@ function generateTimesheet() {
 
 
     [listed, ...returned_holidays] = getHolidaysByMonthYear(monthIndex+1, year);
-    console.log(listed);
     document.getElementById('holidays').value = returned_holidays;
     const holidays = document.getElementById('holidays').value; 
 
